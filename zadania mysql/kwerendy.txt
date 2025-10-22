@@ -1,0 +1,69 @@
+ZADANIE 1
+-----------------------------------------------------
+1
+create table pracownik
+(id_pracownika integer primary key auto_increment, 
+imie varchar(40) not null, nazwisko varchar(60) not null ,
+data_urodzenia date not null );
+
+2
+insert into pracownik(imie, nazwisko, data_urodzenia) 
+values ('Rafal', 'Perla', '69.03.21'),
+('Rafal', 'Trzaskowski', '1800.02.01'),
+('Daniel', 'Sobczyk', '2025-06-30');
+3
+update pracownik set data_urodzenia = '2001.03.03' Where imie = 'Daniel';
+-----------------------------------------------------
+ZADANIE 2
+1
+create table zadanie(id_zadania integer primary key auto_increment, nazwa_zadania varchar(150) not null, priorytet enum('normalny', 'wysoki', 'niski'), opis long, id_pracownika int ,foreign key (id_pracownika) references pracownik(id_pracownika));
+2
+alter table zadanie alter column priorytet set default 'normalny';
+3
+ insert into zadanie(nazwa_zadania, priorytet, opis, id_pracownika)values('pracowanie', 'wysoki', 'opis', 2), ('nie pracowanie', 'niski', 'opis', 1), ('zmywanie podlogi', 'normalny', 'opis2', 3);
+-----------------------------------------------------
+ZADANIE 3
+1
+create table projekt
+(id_projektu integer primary key auto_increment, 
+nazwa_projektu varchar(150), 
+data_rozpoczecia date,
+data_zakonczenia date);
+2
+alter table projekt
+add column menedzer_projektu integer;
+alter table projekt
+add constraint menedzer_projektu
+foreign key(menedzer_projektu) 
+references pracownik(id_pracownika);
+3
+insert into projekt(nazwa_projektu, data_rozpoczecia, data_zakonczenia)values('projekt1', '2003.10.10', '2004.10.10'), 
+('projekt2', '2005.10.10', '2006.10.10');
+4
+alter table zadanie
+add column projekt integer;
+alter table zadanie
+add constraint projekt
+foreign key(projekt)
+references projekt(id_projektu)
+on delete cascade;
+5
+update zadanie set projekt = 1 where id_zadania = 1;
+update zadanie set projekt = 2 where id_zadania = 2;
+update zadanie set projekt = 3 where nazwa_zadania like 'zmywanie podlogi';
+
+ZADANIE 4
+-----------------------------------------------------
+1
+create table sprint
+(id_sprintu integer primary key auto_increment, 
+numer_sprintu int unsigned, 
+data_rozpoczecia date,
+data_zakonczenia date);
+2
+alter table zadanie
+add column sprint integer;
+alter table zadanie
+add constraint sprint
+foreign key(sprint)
+references sprint(id_sprintu) on delete set null;
