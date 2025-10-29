@@ -67,3 +67,34 @@ alter table zadanie
 add constraint sprint
 foreign key(sprint)
 references sprint(id_sprintu) on delete set null;
+3
+insert into sprint(numer_sprintu, data_rozpoczecia, data_zakonczenia)
+values(1, '2023.02.23', '2024.02.24');
+update zadanie set sprint = 1 where id_zadania = 1 or id_zadania = 2;
+ZADANIE 5
+-----------------------------------------------------
+1
+create table status
+(id_statusu integer primary key auto_increment,
+nazwa_statusu varchar(20));
+2
+insert into status(nazwa_statusu)
+values("status1"), ("status2"), ("status3");
+3
+create table zadanie_has_status
+(id_zdarzenia integer primary key auto_increment,
+id_zadania int,
+foreign key (id_zadania) references zadanie(id_zadania),
+id_statusu int,
+foreign key (id_statusu) references status(id_statusu),
+data_zdarzenia datetime default CURRENT_TIMESTAMP
+);
+4
+insert into zadanie_has_status(id_zadania, id_statusu, data_zdarzenia)
+values(1, 1, "2021.03.02"),
+(2, 2, "2021.03.03"),
+(3, 3, "2021.03.04");
+5
+delete from projekt where id_projektu = 1;
+6
+truncate table sprint;
