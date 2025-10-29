@@ -1,1 +1,64 @@
 
+ZADANIE 1
+-----------------------------------------------------
+1
+alter table projekt 
+drop constraint menedzer_projektu;
+alter table zadanie drop constraint zadanie_ibfk_1;
+2
+alter table pracownik modify id_pracownika integer;
+alter table pracownik drop primary key;
+3
+alter table pracownik modify
+id_pracownika integer auto_increment primary key;
+4
+alter table zadanie
+add constraint pracownik
+foreign key(id_pracownika) references
+pracownik(id_pracownika);
+
+ZADANIE 2
+-----------------------------------------------------
+1
+alter table zadanie
+add column godziny_szacowane integer default 8;
+2
+update zadanie
+set godziny_szacowane = 4 where id_zadania = 1;
+
+update zadanie
+set godziny_szacowane = 5 where id_zadania = 2;
+
+update zadanie
+set godziny_szacowane = 56 where id_zadania = 3;
+3
+alter table zadanie
+modify godziny_szacowane integer default 6;
+4
+insert into zadanie(nazwa_zadania, priorytet, opis, id_pracownika)
+values('pracowanie3', 'wysoki', 'opis', 2), 
+('pracowanie4', 'niski', 'opis', 1), 
+('zmywanie podlogi3', 'normalny', 'opis2', 3);
+
+delete from zadanie where godziny_szacowane = 6;
+
+ZADANIE 3
+-----------------------------------------------------
+1
+alter table projekt
+add column opis_projektu varchar(50);
+2
+alter table projekt
+modify opis_projektu varchar(200);
+3
+update projekt
+set opis_projektu = "abc" where id_projektu = 1;
+
+update projekt
+set opis_projektu = "abcde" where id_projektu = 2;
+4
+alter table projekt
+drop column opis_projektu;
+
+ZADANIE 4
+-----------------------------------------------------
