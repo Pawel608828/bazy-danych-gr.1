@@ -97,4 +97,6 @@ values(1, 1, "2021.03.02"),
 5
 delete from projekt where id_projektu = 1;
 6
-truncate table sprint;
+alter table zadanie
+drop foreign key sprint;
+drop table sprint;
