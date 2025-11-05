@@ -1,1 +1,26 @@
+---------------ZADANIE 1--------------------------------
+1
+create table client as select * from company_2025.CLIENT;
+create table employee as select * from company_2025.EMPLOYEE;
+create table order1 as select * from company_2025.ORDER;
+2
+select * from order1;
+3
+select * from order1 where order_status = 5;
+4
+select ORDER_ID, ORDER_STATUS from order1 where CLIENT_ID = 1 or 3 or 5;
 
+---------------ZADANIE 2--------------------------------
+1
+select * from employee where FIRST_NAME like 'Agnieszka' and pensja = 3900;
+2
+select * from employee where pensja > 5000 < 7000;
+3
+select * from client where FULL_NAME like '%eco%' and IS_COMPANY = 1;
+
+---------------ZADANIE 3--------------------------------
+1
+select * from order1 where ORDER_DATE = MONTH(
+2
+select * from order1 where MONTH(ORDER_DATE) = 6 or MONTH(ORDER_DATE) = 6;
+3
