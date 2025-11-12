@@ -20,7 +20,23 @@ select * from client where FULL_NAME like '%eco%' and IS_COMPANY = 1;
 
 ---------------ZADANIE 3--------------------------------
 1
-select * from order1 where ORDER_DATE = MONTH(
+select * from order1 where MONTH(ORDER_DATE) = 6 or MONTH(ORDER_DATE) = 7;
 2
-select * from order1 where MONTH(ORDER_DATE) = 6 or MONTH(ORDER_DATE) = 6;
+select * from client where TAX_IDENTIFIER is not null order by SHORT_NAME;
 3
+SELECT * FROM employee ORDER BY BIRTH_DATE ASC LIMIT 5;
+
+---------------ZADANIE 4--------------------------------
+1
+SELECT DISTINCT FIRST_NAME FROM employee;
+2
+SELECT CONCAT(FIRST_NAME, ' - ', LAST_NAME) AS 'imie i nazwisko pracownika' FROM employee WHERE LAST_NAME like 'Ko%';
+3
+SELECT LAST_NAME, pensja FROM employee WHERE YEAR(DATE_OF_EMPLOYMENT) BETWEEN 2010 and 2014;
+---------------ZADANIE 5--------------------------------
+1
+SELECT pensja*0.75 as "netto", pensja*0.25 as "podatek" from employee;
+2
+select * from client where TAX_IDENTIFIER is null;
+3
+SELECT SHORT_NAME FROM client WHERE SHORT_NAME like 'K%ski' ORDER BY SHORT_NAME DESC;
