@@ -1,1 +1,52 @@
+---------------ZADANIE 1--------------------------------
+1
+CREATE TABLE pracownik(
+id int auto_increment primary key,
+imie varchar(50) not null,
+nazwisko varchar(100) not null,
+data_urodzenia date,
+stanowisko enum('sprzedawca', 'magazynier', 'ksiegowa')
+);
+---------------ZADANIE 2--------------------------------
+INSERT INTO pracownik(imie, nazwisko, data_urodzenia, stanowisko) VALUES
+("Twoja babcia", "Skrzypifurtka", "2020-02-02", "ksiegowa"),
+("Rafał", "Gerber", "2010-02-10", "magazynier"),
+("Daniel", "Garbuszewski", "2010-02-10", "sprzedawca");
+---------------ZADANIE 3--------------------------------
+CREATE TABLE dzial(
+id int auto_increment primary key,
+nazwa varchar(255)
+);
+---------------ZADANIE 4--------------------------------
+INSERT INTO dzial(nazwa) VALUES
+("ksiegowosc"),
+("magazyn"),
+("sprzedaz");
+---------------ZADANIE 5--------------------------------
+ALTER TABLE pracownik ALTER COLUMN stanowisko set default 'sprzedawca';
+---------------ZADANIE 6--------------------------------
+ALTER TABLE pracownik
+ADD COLUMN pensja float(8, 2);
+UPDATE pracownik set pensja = 50000.55 WHERE imie like 'Daniel';
+---------------ZADANIE 7--------------------------------
+ALTER TABLE dzial
+RENAME COLUMN nazwa TO nazwa_dzialu,
+RENAME COLUMN id TO id_dzialu; 
 
+ALTER TABLE pracownik
+RENAME COLUMN id TO id_pracownika;
+---------------ZADANIE 8--------------------------------
+DELETE FROM pracownik ORDER BY id_pracownika DESC LIMIT 1;
+---------------ZADANIE 9--------------------------------
+ALTER TABLE pracownik add COLUMN dzial int;
+ALTER TABLE pracownik
+ADD CONSTRAINT fk_dzial
+FOREIGN KEY (dzial)
+REFERENCES dzial(id_dzialu);
+---------------ZADANIE 10--------------------------------
+CREATE TABLE stanowisko(
+id int auto_increment primary key,
+imie varchar(50) not null,
+nazwisko varchar(100) not null,
+data_urodzenia date,
+stanowisko enum('sprzedawca', 'magazynier', 'ksiegowa')
