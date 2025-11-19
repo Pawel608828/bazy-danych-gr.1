@@ -1,0 +1,18 @@
+-----------------------ZADANIE1------------------------
+1
+SELECT AVG(pensja) FROM employee;
+2
+SELECT AVG(pensja) AS 'pensja', COUNT(EMPLOYEE_NAME) AS 'liczba pracownikow' FROM employee GROUP BY JOB_POSITION_ID;
+3
+SELECT AVG((2025-YEAR(BIRTH_DATE))) AS 'sredni wiek' FROM employee GROUP BY DEPARTMENT_ID;
+-----------------------ZADANIE2------------------------
+1
+SELECT SUM(pensja) AS 'łączna pensja' FROM employee GROUP BY DEPARTMENT_ID ORDER BY SUM(pensja) ASC;
+2
+SELECT AVG(pensja) AS 'srednia pensja', COUNT(EMPLOYEE_NAME) AS 'ilosc' FROM employee GROUP BY JOB_POSITION_ID HAVING ilosc >= 3 AND SUM(pensja) > 3000;
+3
+SELECT DEPARTMENT_ID, COUNT(EMPLOYEE_NAME) AS 'liczba pracownikow', COUNT(DISTINCT(pensja)) AS 'pensja_dist'
+FROM employee 
+GROUP BY DEPARTMENT_ID HAVING 'liczba pracownikow' > 3 ORDER BY 'pensja_dist' ASC;
+
+select DEPARTMENT_ID , count(distinct(pensja)) as rozne_pensje,count(FIRST_NAME) as liczba_pracownikow from employee group by DEPARTMENT_ID having liczba_pracownikow>3 ORDER BY rozne_pensje ASC;
