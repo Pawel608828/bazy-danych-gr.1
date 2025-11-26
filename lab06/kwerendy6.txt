@@ -11,8 +11,65 @@ SELECT SUM(pensja) AS 'łączna pensja' FROM employee GROUP BY DEPARTMENT_ID ORD
 2
 SELECT AVG(pensja) AS 'srednia pensja', COUNT(EMPLOYEE_NAME) AS 'ilosc' FROM employee GROUP BY JOB_POSITION_ID HAVING ilosc >= 3 AND SUM(pensja) > 3000;
 3
-SELECT DEPARTMENT_ID, COUNT(EMPLOYEE_NAME) AS 'liczba pracownikow', COUNT(DISTINCT(pensja)) AS 'pensja_dist'
-FROM employee 
-GROUP BY DEPARTMENT_ID HAVING 'liczba pracownikow' > 3 ORDER BY 'pensja_dist' ASC;
+SELECT DEPARTMENT_ID , COUNT(distinct(pensja)) as rozne_pensje,count(FIRST_NAME) as liczba_pracownikow from employee group by DEPARTMENT_ID having liczba_pracownikow>3 ORDER BY rozne_pensje ASC;
+-----------------------ZADANIE3------------------------
+1
+CREATE TABLE DEPATRMENT AS SELECT * FROM company_2025.DEPARTMENT;
+CREATE TABLE JOB_POSITION AS SELECT * FROM company_2025.JOB_POSITION;
+2
+SELECT COUNT(employee.EMPLOYEE_NAME) FROM DEPARTMENT
+INNER JOIN employee ON DEPARTMENT.DEPARTMENT_ID = employee.DEPARTMENT_ID GROUP BY DEPARTMENT.DEPARTMENT_NAME;
+3
+SELECT CONCAT(employee.FIRST_NAME, ' ', employee.LAST_NAME) AS 'Imie i nazwisko' FROM DEPARTMENT
+INNER JOIN employee ON DEPARTMENT.DEPARTMENT_ID = employee.DEPARTMENT_ID GROUP BY DEPARTMENT.DEPARTMENT_NAME, 
+employee.FIRST_NAME, 
+employee.LAST_NAME;
+-----------------------ZADANIE5------------------------
+2
+SELECT
+CONCAT(MIN(employee.BIRTH_DATE), ' ', employee.FIRST_NAME) AS Najmlodsza,
+MAX(employee.BIRTH_DATE) AS 'Najstarsza',
+DEPARTMENT.DEPARTMENT_NAME
+FROM JOB_POSITION
+INNER JOIN employee 
+    ON JOB_POSITION.JOB_POSITION_ID = employee.JOB_POSITION_ID
+INNER JOIN DEPARTMENT
+    ON employee.DEPARTMENT_ID = DEPARTMENT.DEPARTMENT_ID
 
-select DEPARTMENT_ID , count(distinct(pensja)) as rozne_pensje,count(FIRST_NAME) as liczba_pracownikow from employee group by DEPARTMENT_ID having liczba_pracownikow>3 ORDER BY rozne_pensje ASC;
+GROUP BY
+    DEPARTMENT.DEPARTMENT_NAME;
+
+SELECT 
+    CONCAT(young.FIRST_NAME, ' ', young.LAST_NAME) AS Najmlodsza,
+    young.BIRTH_DATE AS Data_Najmlodsza,
+    CONCAT(old.FIRST_NAME, ' ', old.LAST_NAME) AS Najstarsza,
+    old.BIRTH_DATE AS Data_Najstarsza,
+    d.DEPARTMENT_NAME
+FROM DEPARTMENT d
+-- Self-join dla najmłodszej osoby
+INNER JOIN (
+    SELECT e1.DEPARTMENT_ID, e1.FIRST_NAME, e1.LAST_NAME, e1.BIRTH_DATE
+    FROM employee e1
+    INNER JOIN (
+        SELECT DEPARTMENT_ID, MAX(BIRTH_DATE) AS MaxBirth
+        FROM employee
+        GROUP BY DEPARTMENT_ID
+    ) e2
+    ON e1.DEPARTMENT_ID = e2.DEPARTMENT_ID
+    AND e1.BIRTH_DATE = e2.MaxBirth
+) AS young
+ON d.DEPARTMENT_ID = young.DEPARTMENT_ID
+-- Self-join dla najstarszej osoby
+INNER JOIN (
+    SELECT e1.DEPARTMENT_ID, e1.FIRST_NAME, e1.LAST_NAME, e1.BIRTH_DATE
+    FROM employee e1
+    INNER JOIN (
+        SELECT DEPARTMENT_ID, MIN(BIRTH_DATE) AS MinBirth
+        FROM employee
+        GROUP BY DEPARTMENT_ID
+    ) e2
+    ON e1.DEPARTMENT_ID = e2.DEPARTMENT_ID
+    AND e1.BIRTH_DATE = e2.MinBirth
+) AS old
+ON d.DEPARTMENT_ID = old.DEPARTMENT_ID
+ORDER BY d.DEPARTMENT_NAME;
