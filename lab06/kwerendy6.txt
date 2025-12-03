@@ -73,3 +73,36 @@ INNER JOIN (
 ) AS old
 ON d.DEPARTMENT_ID = old.DEPARTMENT_ID
 ORDER BY d.DEPARTMENT_NAME;
+
+
+
+
+
+WITH department_max AS (
+    SELECT MIN(e.BIRTH_DATE) AS min_data, d.DEPARTMENT_NAME AS department_name
+    FROM DEPARTMENT d
+    INNER JOIN employee e ON d.DEPARTMENT_ID = e.DEPARTMENT_ID
+    GROUP BY d.DEPARTMENT_NAME
+),
+department_min AS (
+    SELECT MAX(e.BIRTH_DATE) AS max_data, d.DEPARTMENT_NAME AS department_name
+    FROM DEPARTMENT d
+    INNER JOIN employee e ON d.DEPARTMENT_ID = e.DEPARTMENT_ID
+    GROUP BY d.DEPARTMENT_NAME
+)
+SELECT min.department_name, min.max_data, max.min_data
+FROM department_min min
+INNER JOIN department_max max ON min.department_name = max.department_name;
+
+
+
+
+
+
+
+
+
+
+
+
+
