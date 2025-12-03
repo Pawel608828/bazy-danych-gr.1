@@ -1,0 +1,14 @@
+-----------------ZADANIE 1-----------------------------------
+create table adres_klienta as select * from __firma_zti.adres_klienta;
+create table dzial as select * from __firma_zti.dzial;
+create table jednostka_miary as select * from __firma_zti.jednostka_miary;
+create table kategoria as select * from __firma_zti.kategoria;
+create table klient as select * from __firma_zti.klient;
+create table pozycja_zamowienia as select * from __firma_zti.pozycja_zamowienia;
+create table pracownik as select * from __firma_zti.pracownik;
+create table stan_magazynowy as select * from __firma_zti.stan_magazynowy;
+create table status_zamowienia as select * from __firma_zti.status_zamowienia;
+create table towar as select * from __firma_zti.towar;
+create table typ_adresu as select * from __firma_zti.typ_adresu;
+create table zamowienie as select * from __firma_zti.zamowienie;
+1
